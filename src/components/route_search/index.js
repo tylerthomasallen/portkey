@@ -17,7 +17,7 @@ class RouteSearch extends Component {
     }
     
     componentDidMount() {
-        this.fetchPlaces()
+        this.fetchPlaces();
     }
 
     fetchPlaces() {
@@ -48,8 +48,8 @@ class RouteSearch extends Component {
                 />
 
                 <View>
-                    {this.state.predictions.map(obj => {
-                        return <Text>{obj.description}</Text>
+                    {this.state.predictions.map((obj, idx) => {
+                        return <Text key={idx}>{obj.description}</Text>;
                     })}
                 </View>
 
@@ -69,43 +69,5 @@ const styles = StyleSheet.create({
         padding: 10
     },
 });
-
-// async function testCall() {
-//     try {
-//         let response = await fetch(
-//             'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY'
-//         );
-//         let responseJson = await response.json();
-//         debugger
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-async function fetchPredictions() {
-    debugger;
-    try {
-        let response = await fetch(
-            'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY'
-        );
-        let responseJson = await response.json();
-        debugger;
-        const { predictions } = responseJson;
-        this.setState({ predictions })
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// axios
-//     .get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY')
-//     .then(res => {
-//         debugger;
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
-
-
 
 export default RouteSearch;

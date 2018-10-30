@@ -8,16 +8,16 @@ export const receivePlaces = payload => {
 }
 
 
-export async function fetchPlaces() {
-    debugger;
-    try {
-        let response = await fetch(
-            'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY'
-        );
-        let responseJson = await response.json();
-        const { predictions } = responseJson;
-        receivePlaces(predictions)
-    } catch (error) {
-        console.error(error);
-    }
-}
+// export async function fetchPlaces() {
+//     debugger;
+//     try {
+//         let response = await fetch(
+//             'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY'
+//         );
+//         let responseJson = await response.json();
+//         const { predictions } = responseJson;
+//         receivePlaces(predictions)
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }

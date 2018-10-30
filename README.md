@@ -17,7 +17,14 @@ In Portkey, users will be able to:
 
 ## Wireframes
 
-This app will consist of a single screen containting a map of the local area, with the option to enter a trip on the bottom 3rd of the page.
+The app will consist of three main screens. The first will be a map with your location and an option to enter an address towards the bottom (first screenshot on the left). The second will be a dropdown to input an origin and destination (screenshot two), and the third will be the original map page will options to compare/order an Uber or Lyft towards the bottom(final screenshot on the right).
+
+<div display="flex">
+<img src="https://i.imgur.com/uP0Vtjn.jpg" alt="drawing" width="200"/>
+<img src="https://i.imgur.com/OwGLHHv.png" alt="drawing" width="200" margin="20"/>
+<img src="https://i.imgur.com/dwP5h1v.jpg" alt="drawing" width="200"/>
+
+</div>
 
 ## Architecture and Technologies
 
