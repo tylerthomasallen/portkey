@@ -20,12 +20,19 @@ class RouteSearch extends Component {
         this.fetchPlaces();
     }
 
+    // json?input = SanFrancisco & key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY
+
     fetchPlaces() {
         axios
-        .get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=SanFrancisco&key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY')
+        .get('https://maps.googleapis.com/maps/api/place/autocomplete/json?', {
+            params: {
+                key: 'AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY',
+                input: 'San Francisco'
+            }
+        })
         .then(res => {
             const { predictions } = res.data;
-            this.setState({predictions: predictions})
+            this.setState({predictions: predictions});
         })
         .catch(err => {
             console.log(err);
