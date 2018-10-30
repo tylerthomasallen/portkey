@@ -2,42 +2,48 @@ import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Button, TouchableHighlight, Alert, ScrollView} from 'react-native';
 import { fetchPlaces } from '../../api/google_api';
 import axios from 'axios';
+import { debounce } from 'lodash';
 
 class RouteSearch extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currentLocation: '',
+            currentLocation: '2713 Folsom St, San Francisco, CA 94110',
             predictions: [],
+            destination: '',
+            previousDestination: '',
             button: ''
         };
 
-        this.fetchPlaces = this.fetchPlaces.bind(this);
-    }
-    
-    componentDidMount() {
-        this.fetchPlaces();
+        this.fetchPlaces = debounce(this.fetchPlaces.bind(this), 500);
     }
 
-    // json?input = SanFrancisco & key=AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY
+    componentDidUpdate() {
+        const { destination, previousDestination, predictions} = this.state;
 
-    fetchPlaces() {
+        if (destination.length >= 1 && predictions.length <= 0) {
+            this.fetchPlaces(destination);
+        }
+    }
+
+    fetchPlaces(inputText) {
         axios
-        .get('https://maps.googleapis.com/maps/api/place/autocomplete/json?', {
-            params: {
-                key: 'AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY',
-                input: 'San Francisco'
-            }
-        })
-        .then(res => {
-            const { predictions } = res.data;
-            this.setState({predictions: predictions});
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    }
+            .get('https://maps.googleapis.com/maps/api/place/autocomplete/json?', {
+                params: {
+                    key: 'AIzaSyDQKxMvYxiQzgIHDF1_QHYG1ysmifP6XDY',
+                    input: inputText
+                }
+            })
+            .then(res => {
+                const { predictions } = res.data;
+                this.setState({predictions: predictions});
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        }
 
     render() {
         return (
@@ -46,12 +52,14 @@ class RouteSearch extends Component {
                     style={styles.input}
                     placeholder="Search pickup spot"
                     onChangeText={(input) => this.setState({currentLocation: input})}
+                    value={this.state.currentLocation}
                     />
 
                 <TextInput
                     style={styles.input}
                     placeholder="Search destination"
-                    onChangeText={(input) => this.setState({destination: input})}
+                    onChangeText={(input) => this.setState({destination: input, predictions: []})}
+                    value={this.state.destination}
                 />
 
                 <View>
@@ -72,8 +80,9 @@ class RouteSearch extends Component {
 const styles = StyleSheet.create({
     input: {
         height: 100,
-        fontSize: 100,
-        padding: 10
+        fontSize: 20,
+        padding: 10,
+        marginTop: 20
     },
 });
 
